@@ -54,7 +54,10 @@ def train(epochs_num=10, lr=0.001):
         # 每5个epoch保存一次模型并测试
         if ((epoch != 0) and (epoch % 5 == 0)) or (epoch == epochs_num - 1):
             # save model
-            torch.save(model.state_dict(), os.path.join(train_result_path, f'model_{epoch}.pth'))
+            if epoch == epochs_num - 1:
+                torch.save(model, os.path.join(train_result_path, f'model_final.pth'))
+            else:
+                torch.save(model.state_dict(), os.path.join(train_result_path, f'model_{epoch}.pth'))
             # eval
             with torch.no_grad():
                 model.eval()
